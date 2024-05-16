@@ -5,7 +5,18 @@ export default function App() {
   return (
     <View style={styles.container}>
       
-      
+      <Image style={styles.logo} source={require('./assets/icon.png')}/>
+      <TextInput style={styles.textBox} placeholder='Username'/>
+      <TextInput style={styles.textBox} placeholder='Password'/>
+      <StatusBar style="auto" />
+      <View>
+        <Pressable>
+          <Text>Log in</Text>
+        </Pressable>
+        <Pressable>
+          <Text>Sign Up</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
