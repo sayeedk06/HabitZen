@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Pressable, Text } from "react-native";
-export default function Button({name, navigation}) {
+export default function FloatingButton({name, navigation}) {
     return (
         <Pressable style={styles.button} onPress={()=> navigation.navigate('Home')}>
             <Text style={styles.buttonText}>{name}</Text>
@@ -11,14 +11,15 @@ export default function Button({name, navigation}) {
 const styles = StyleSheet.create({
     button: {
         backgroundColor: '#FC4100',
-        padding: 15,
+        padding: 30,
         width: 100,
-        borderRadius: 10,
+        height: 100,
+        borderRadius: 100,
     
         
       },
       buttonText: {
-        fontSize: 16,
+        fontSize: 35,
         textAlign: 'center',
         color: '#FFFBDA'
     

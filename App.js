@@ -1,19 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
-import Button from './components/Button'
+
+import { StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Root from './pages/Root'
+import Home from './pages/Home'
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      
-      <Image style={styles.logo} source={require('./assets/icon.png')}/>
-      <TextInput style={styles.textBox} placeholder='Username'/>
-      <TextInput style={styles.textBox} placeholder='Password'/>
-      <StatusBar style="auto" />
-      <View style={styles.buttonContainer}>
-        <Button name='Log in'/>
-        <Button name='Sign up'/>
-      </View>
-    </View>
+    <NavigationContainer>
+    <Stack.Navigator>
+        <Stack.Screen name="Root" component={Root} />
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>    
+    </NavigationContainer>
   );
 }
 
