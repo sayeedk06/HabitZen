@@ -4,18 +4,30 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Root from './pages/Root'
 import Home from './pages/Home'
+import HabitList from './pages/HabitList';
+import Detail from './pages/Detail';
+import { useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
-  return (
-    <NavigationContainer>
-    <Stack.Navigator>
-        <Stack.Screen name="Root" component={Root} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>    
-    </NavigationContainer>
-  );
+  const [loggedin, setLoggedin] = useState(false);
+  if (!loggedin) {
+    return <Root setloggedin={setLoggedin}/>
+  }else {
+    return (
+    
+      <NavigationContainer>
+      <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Habit" component={HabitList} />
+          <Stack.Screen name="Detail" component={Detail} />
+        </Stack.Navigator>    
+      </NavigationContainer>
+    );
+  }
+  
 }
 
 const styles = StyleSheet.create({

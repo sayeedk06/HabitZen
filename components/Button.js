@@ -1,8 +1,13 @@
 import { StyleSheet } from "react-native";
 import { Pressable, Text } from "react-native";
-export default function Button({name, navigation}) {
+
+const onlogin = (setLoggedin) => {
+    setLoggedin(true)
+} 
+
+export default function Button({name,setloggedin}) {
     return (
-        <Pressable style={styles.button} onPress={()=> navigation.navigate('Home')}>
+        <Pressable style={styles.button} onPress={() => onlogin(setloggedin)}>
             <Text style={styles.buttonText}>{name}</Text>
         </Pressable>
     );

@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, TextInput} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function Root({navigation}) {
+export default function Root({navigation, setloggedin}) {
     return (
         <View style={styles.container}>
       <Image style={styles.logo} source={require('../assets/icon.png')}/>
@@ -12,7 +12,7 @@ export default function Root({navigation}) {
       <TextInput style={styles.textBox} placeholder='Password'/>
       <StatusBar style="auto" />
       <View style={styles.buttonContainer}>
-        <Button name='Log in' navigation={navigation}/>
+        <Button name='Log in' navigation={navigation} setloggedin={setloggedin}/>
         <Button name='Sign up'/>
       </View>
      
