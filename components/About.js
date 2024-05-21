@@ -1,9 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import licenses from '../licenses.json'
+import { useState } from "react";
 
+const license_name = [];
+for (var k in licenses){
+    if (licenses.hasOwnProperty(k)){
+        if (!(license_name.includes(licenses[k].licenses))){
+            license_name.push(licenses[k].licenses)
+        }
+            
+    }
+}
+
+console.log(license_name)
 
 export default function About() {
+
     return (
-        <View style={styles.constainer}>
+        <ScrollView style={styles.constainer}>
             <Text style={styles.title}>Introduction</Text>
             <Text>
                 Welcome to our Habit Tracker App! Whether you're trying to 
@@ -32,13 +46,18 @@ export default function About() {
             <Text>
                 Set reminders for your habits. Our app will send you gentle nudges to keep you accountable throughout the day.
             </Text>
-        </View>
+            <Text style={styles.title}>Associated License:</Text>
+            {license_name.map((license) => (
+                <Text>{license}</Text>
+            ))}
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     constainer: {
         padding: 10,
+        paddingBottom: 10
     },
     title: {
         fontSize: 30
