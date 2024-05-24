@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Pressable, Text } from "react-native";
 
 const onlogin = (setLoggedin) => {
-    setLoggedin(true)
+    setLoggedin  (true)
 } 
 
 export default function Button({name,setloggedin}) {

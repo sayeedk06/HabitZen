@@ -1,80 +1,60 @@
+import { useEffect, useState } from 'react';
 import { StyleSheet, View, Image, TextInput, Text, ScrollView, Pressable} from 'react-native';
 
-const habitlist = {
-    "habits": [
-      {
-        "id": 1,
-        "name": "Morning Meditation",
-        "description": "Practice mindfulness for 10 minutes every morning.",
-        "frequency": "daily",
-        "streak": 15,
-        "category": "Wellness"
-      },
-      {
-        "id": 2,
-        "name": "Read 20 Pages",
-        "description": "Read a book for at least 20 pages each day.",
-        "frequency": "daily",
-        "streak": 30,
-        "category": "Personal Growth"
-      },
-      {
-        "id": 3,
-        "name": "Cycle",
-        "description": "Work out at the gym or go for a run.",
-        "frequency": "3 times a week",
-        "streak": 12,
-        "category": "Fitness"
-      },
-      {
-        "id": 4,
-        "name": "Drink Water",
-        "description": "Practice mindfulness for 10 minutes every morning.",
-        "frequency": "daily",
-        "streak": 15,
-        "category": "Wellness"
-      },
-      {
-        "id": 5,
-        "name": "Study",
-        "description": "Read a book for at least 20 pages each day.",
-        "frequency": "daily",
-        "streak": 30,
-        "category": "Personal Growth"
-      },
-      {
-        "id": 6,
-        "name": "Yoga",
-        "description": "Work out at the gym or go for a run.",
-        "frequency": "3 times a week",
-        "streak": 12,
-        "category": "Fitness"
-      }
-      
-    ]
-  }
-
+async function getData () {
+  const url = "http://172.20.10.2:8000/habits"
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log ("lalal" + data);
+  
+  return data
+}
 
 
 export default function HabitList ({navigation}) {
+  const [gitRepos, setGitRepos] = useState([]);
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await getData();
+            console.log(data)
+            setGitRepos(data);
+            
+  
+        }catch(e) {
+            console.log("FETCH:"+ e)
+           
+        }
+        
+    }
+
+    )();
+}, [])
     return (
         <View>
             <ScrollView>
-                {habitlist.habits.map( (x)=> (
-                    <Pressable onPress={() => navigation.navigate('Detail')}>
-                        <Text style={styles.listText}>{x.name}</Text>
-                    </Pressable>
-                    
+                <Text style={styles.categoryText}>Fitness</Text>
+                
+                {gitRepos.map((x) => (
+                  <Pressable onPress={() => navigation.navigate('Detail')}>
+                    <Text style={styles.listText}>{x.Name}</Text>
+                </Pressable>
                 ))}
+                <Text style={styles.categoryText}>Wellbeing</Text>
+                <Text style={styles.categoryText}>Health</Text>
             </ScrollView>
         </View> 
     );
 }
 
 const styles = StyleSheet.create({
+    categoryText: {
+      fontSize: 25,
+      margin: 5
+    },
     listText: {
         backgroundColor: '#FFFBDA',
-        fontSize: 30,
+        fontSize: 20,
         padding: 20,
         margin: 5,
     }
