@@ -1,15 +1,73 @@
+import { useState, useEffect } from 'react';
 import FloatingButton from './floatingButton';
-import { StyleSheet, View, Image,Text} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { StyleSheet, View, Image,Text, Pressable, ScrollView} from 'react-native';
+
+async function getData () {
+    const url = "http://172.20.10.2:8000/api/habits"
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log ("lalal" + data);
+  
+    return data
+  }
+
 export default function Profile({navigation}) {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.homeText}>Welcome to HabitZen!!</Text>
-            <Image style={styles.backgroundImage} source={require("../assets/background.png")}/>
-            <Text style={styles.noitemText}>No habits added yet</Text>
-            <Text style={styles.noitemText}>Click + to add</Text>
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await getData();
+                console.log(data)
+                setData(data);
+    
+    
+            }catch(e) {
+                console.log("FETCH:"+ e)
+    
+            }
+    
+        }
+    
+        )();
+    }, [])
+
+    if(data.length > 0) {
+        return (
+            <ScrollView>
+            {data.map((x)=> (
+                <View style={styles.habitContainer}>
+                <Pressable style={styles.habitButton}>
+                {/* <Icon name="rightsquareo" />               */}
+                <Text style={styles.habitText}>{x.name}</Text>
+                </Pressable>
+                <Pressable style={styles.deleteButton}>
+                <Icon name="delete" size={30} color="#FFBB70" />
+                </Pressable>
+                <Pressable style={styles.addButton}>
+                <Icon name="plussquare" theme="outlined" size={30} color="#ED9455" />
+                </Pressable>
+                </View>
+            ))}
             <FloatingButton name='+' navigation={navigation}/>
-        </View>
-    )
+            </ScrollView>
+        )
+    }else {
+        return (
+
+            <View style={styles.container}>
+                <Text style={styles.homeText}>Welcome to HabitZen!!</Text>
+                <Image style={styles.backgroundImage} source={require("../assets/background.png")}/>
+                <Text style={styles.noitemText}>No habits added yet</Text>
+                <Text style={styles.noitemText}>Click + to add</Text>
+                <FloatingButton name='+' navigation={navigation}/>
+            </View>
+        )
+    }
+
+    
 }
 
 const styles = StyleSheet.create({
@@ -17,6 +75,34 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 5,
         alignItems: 'center'
+    },
+    habitText: {
+        color: "#FFFBDA",
+        fontSize: 20,
+    },
+    habitButton: {
+        flexDirection: 'row',
+        backgroundColor: "#ED9455",
+        padding: 10,
+        width: 200,
+        margin: 5,
+    },
+    deleteButton: {
+        // backgroundColor: "#C73659",
+        padding: 10,
+        width: 80,
+        margin: 5, 
+    },
+    addButton: {
+        padding: 10,
+        width: 80,
+        margin: 5, 
+    },
+    habitContainer: {
+        width: "100%",
+        margin: 1,
+        flexDirection: 'row'
+
     },
     homeText: {
         fontSize: 30,

@@ -1,11 +1,11 @@
 import { StyleSheet, View, TextInput, Text, ScrollView, Pressable} from 'react-native';
-import {Calendar, CalendarProvider, ExpandableCalendar} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 export default function CreateHabit() {
     return (
-        <ScrollView style={styles.Container}>
+        <ScrollView style={styles.Container}> 
             <View style={styles.inputGroup}>
             <Text>Name</Text>
-            <TextInput style={styles.input} placeholder='Habit Name'/>
+            <TextInput style={styles.input} autoCorrect={true} placeholder='Habit Name'/>
             </View>
             <View style={styles.inputGroup}>
             <Text>Description</Text>
@@ -18,7 +18,7 @@ export default function CreateHabit() {
             <View style={styles.inputGroup}>
             <Text>Goals/Period</Text>
             <View style={styles.horizontalContainer}>
-            <TextInput style={styles.inputGoal}/>
+            <TextInput style={styles.inputGoal} keyboardType="numeric"/>
             <Text style={styles.centerText}>/</Text>
             <Text style={styles.centerText}>Day</Text>
             <Text style={styles.centerText}>Week</Text>
@@ -44,7 +44,7 @@ export default function CreateHabit() {
                 <Text style={styles.buttonText}>Create Habit</Text>
             </Pressable>
             
-            
+             
         </ScrollView>
     );
 }
