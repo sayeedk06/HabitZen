@@ -1,6 +1,6 @@
 import { StyleSheet, View, TextInput, Text, ScrollView, Pressable} from 'react-native';
 import {Calendar, CalendarProvider, ExpandableCalendar} from 'react-native-calendars';
-export default function Detail() {
+export default function CreateHabit() {
     return (
         <ScrollView style={styles.Container}>
             <View style={styles.inputGroup}>

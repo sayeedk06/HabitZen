@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Pressable, Text } from "react-native";
 export default function FloatingButton({name, navigation}) {
     return (
-        <Pressable style={styles.button} onPress={()=> navigation.navigate('Habit')}>
+        <Pressable style={styles.button} onPress={()=> navigation.navigate('Create habit')}>
             <Text style={styles.buttonText}>{name}</Text>
         </Pressable>
     );

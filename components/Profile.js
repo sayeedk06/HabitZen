@@ -1,5 +1,5 @@
 import FloatingButton from './floatingButton';
-import { StyleSheet, View, Image, TextInput, Text} from 'react-native';
+import { StyleSheet, View, Image,Text} from 'react-native';
 export default function Profile({navigation}) {
     return (
         <View style={styles.container}>
