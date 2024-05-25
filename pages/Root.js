@@ -1,18 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
 import Button from '../components/Button'
-import { StyleSheet, View, Image, TextInput, KeyboardAvoidingView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View, Image, TextInput, KeyboardAvoidingView, Text } from 'react-native';
+import { useState } from 'react';
+
+
+
 
 export default function Root({ navigation, setloggedin }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let errors = {}
+    if (!username) errors.username = "*Username is required";
+    if (!password) errors.password = "*Password is required";
+    setErrors(errors);
+    let ErrorSize = Object.keys(errors).length;
+    if (ErrorSize === 0) {
+        setloggedin(true)
+    }
+    return Object.keys(errors).length === 0;
+  }
+
   return (
-    <KeyboardAvoidingView behavior='padding ' style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image style={styles.logo} source={require('../assets/icon.png')} />
-      <TextInput style={styles.textBox} placeholder='Username' />
-      <TextInput style={styles.textBox} placeholder='Password' />
+      <TextInput style={styles.textBox} placeholder='Username' onChangeText={setUsername}/>
+      {errors.username && <Text style={styles.errors}>{errors.username}</Text>}
+      <TextInput style={styles.textBox} placeholder='Password' onChangeText={setPassword} secureTextEntry/>
+      {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
       <StatusBar style="auto" />
       <View style={styles.buttonContainer}>
-        <Button name='Log in' navigation={navigation} setloggedin={setloggedin} />
+        <Button name='Log in' validateForm={validateForm}/>
         <Button name='Sign up' />
       </View>
 
@@ -50,12 +70,14 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 10,
 
-
   },
   buttonText: {
     fontSize: 16,
     textAlign: 'center',
     color: '#FFFBDA'
 
+  },
+  errors: {
+    color: '#C73659'
   }
 });

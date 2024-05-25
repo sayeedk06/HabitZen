@@ -1,13 +1,12 @@
-import { StyleSheet } from "react-native";
-import { Pressable, Text } from "react-native";
+import { StyleSheet, Pressable, Text } from "react-native";
 
-const onlogin = (setLoggedin) => {
-    setLoggedin  (true)
-} 
 
-export default function Button({name,setloggedin}) {
+
+export default function Button({validateForm, name}) {
     return (
-        <Pressable style={styles.button} onPress={() => onlogin(setloggedin)}>
+        <Pressable style={styles.button} onPress={() => {
+            validateForm()
+        }}>
             <Text style={styles.buttonText}>{name}</Text>
         </Pressable>
     );
@@ -19,13 +18,13 @@ const styles = StyleSheet.create({
         padding: 15,
         width: 100,
         borderRadius: 10,
-    
-        
-      },
-      buttonText: {
+
+
+    },
+    buttonText: {
         fontSize: 16,
         textAlign: 'center',
         color: '#FFFBDA'
-    
-      }
+
+    }
 })
