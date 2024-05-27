@@ -2,38 +2,68 @@ import { StatusBar } from 'expo-status-bar';
 import Button from '../components/Button'
 import { StyleSheet, View, Image, TextInput, KeyboardAvoidingView, Text } from 'react-native';
 import { useState } from 'react';
-// import EncryptedStorage from 'react-native-encrypted-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+  try {
+    await AsyncStorage.setItem('ACCESS_TOKEN', value);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 
 
-export default function Root({ navigation, setloggedin }) {
-  const [username, setUsername] = useState("");
+
+export default function Root({ navigation }) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     let errors = {}
-    if (!username) errors.username = "*Username is required";
+    if (!email) errors.email = "*Username is required";
     if (!password) errors.password = "*Password is required";
     setErrors(errors);
-    let ErrorSize = Object.keys(errors).length;
-    if (ErrorSize === 0) {
-
-        setloggedin(true)
-    }
     return Object.keys(errors).length === 0;
+  }
+
+  const authorizeUser = async() => {
+    if (validateForm()){
+      const url = "http://172.20.10.2:8000/api/users/login"
+            await fetch(url, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+
+                        email: email,
+                        password: password,
+
+                    }
+                )
+            }).then((response) => response.json()).then((responseData) => {
+                console.log(responseData);
+                console.log(responseData.token)
+                storeData(responseData.token);
+                navigation.navigate('Home')            
+            })
+    }
   }
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image style={styles.logo} source={require('../assets/icon.png')} />
-      <TextInput style={styles.textBox} placeholder='Username' onChangeText={setUsername}/>
-      {errors.username && <Text style={styles.errors}>{errors.username}</Text>}
+      <TextInput style={styles.textBox} placeholder='Username/Email' onChangeText={setEmail}/>
+      {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
       <TextInput style={styles.textBox} placeholder='Password' onChangeText={setPassword} secureTextEntry/>
       {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
       <StatusBar style="auto" />
       <View style={styles.buttonContainer}>
-        <Button name='Log in' validateForm={validateForm} navigation={navigation}/>
+        <Button name='Log in' validateForm={authorizeUser} navigation={navigation}/>
         <Button name='Register' navigation={navigation}/>
       </View>
 

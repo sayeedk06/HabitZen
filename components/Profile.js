@@ -2,10 +2,29 @@ import { useState, useEffect } from 'react';
 import FloatingButton from './floatingButton';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { StyleSheet, View, Image,Text, Pressable, ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('ACCESS_TOKEN');
+
+      if (value !== null) {
+        
+        return value
+      }else {
+        console.log("Doesnt work")
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
 
 async function getData () {
+    const token = await getToken();
+    const headers = {'Authorization': `Bearer ${token}`}
     const url = "http://172.20.10.2:8000/api/habits"
-    const res = await fetch(url);
+    const res = await fetch(url, {headers});
     const data = await res.json();
     console.log ("lalal" + data);
   
