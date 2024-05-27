@@ -6,25 +6,22 @@ import Root from './pages/Root'
 import Home from './pages/Home'
 import CreateHabit from './pages/CreateHabit';
 import { useState } from 'react';
+import Register from './pages/Register';
 
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
-  const [loggedin, setLoggedin] = useState(false);
-  if (!loggedin) {
-    return <Root setloggedin={setLoggedin}/>
-  }else {
     return (
-    
       <NavigationContainer>
       <Stack.Navigator>
+          <Stack.Screen name="Log in" component={Root} options={{headerShown: false}}/>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Create habit" component={CreateHabit} />
+          <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>    
       </NavigationContainer>
     );
-  }
   
 }
 

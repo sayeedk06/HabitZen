@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import Button from '../components/Button'
 import { StyleSheet, View, Image, TextInput, KeyboardAvoidingView, Text } from 'react-native';
 import { useState } from 'react';
-
+// import EncryptedStorage from 'react-native-encrypted-storage';
 
 
 
@@ -18,6 +18,7 @@ export default function Root({ navigation, setloggedin }) {
     setErrors(errors);
     let ErrorSize = Object.keys(errors).length;
     if (ErrorSize === 0) {
+
         setloggedin(true)
     }
     return Object.keys(errors).length === 0;
@@ -32,8 +33,8 @@ export default function Root({ navigation, setloggedin }) {
       {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
       <StatusBar style="auto" />
       <View style={styles.buttonContainer}>
-        <Button name='Log in' validateForm={validateForm}/>
-        <Button name='Sign up' />
+        <Button name='Log in' validateForm={validateForm} navigation={navigation}/>
+        <Button name='Register' navigation={navigation}/>
       </View>
 
     </KeyboardAvoidingView>
