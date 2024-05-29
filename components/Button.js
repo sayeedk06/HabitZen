@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 
 // const buttonPress = () => {
@@ -12,17 +12,17 @@ import { StyleSheet, Pressable, Text } from "react-native";
 export default function Button({validateForm, name, navigation}) {
     if (name === 'Log in') {
         return (
-            <Pressable style={styles.button} onPress={() => { 
+            <TouchableOpacity style={styles.button} onPress={() => { 
                 validateForm()
             }}>
                 <Text style={styles.buttonText}>{name}</Text>
-            </Pressable>
+            </TouchableOpacity>
         );
     }else if (name === 'Register') {
         return (
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Register') }>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Register') }>
                 <Text style={styles.buttonText}>{name}</Text>
-            </Pressable>
+            </TouchableOpacity>
         );
     }
    

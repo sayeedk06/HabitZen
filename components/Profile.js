@@ -26,20 +26,27 @@ async function getData () {
     const url = "http://172.20.10.2:8000/api/habits"
     const res = await fetch(url, {headers});
     const data = await res.json();
-    console.log ("lalal" + data);
   
     return data
   }
 
-export default function Profile({navigation}) {
-
+export default function Profile({route, navigation}) {
+    
     const [data, setData] = useState([]);
+    const [user, setUser] = useState();
+    const {text} = route.params
+    
+    // if (text != 'refresh') {
+    //     setUser(text)
+    // }
+    
+    
 
     useEffect(() => {
         (async () => {
             try {
                 const data = await getData();
-                console.log(data)
+                // console.log(data)
                 setData(data);
     
     
@@ -51,11 +58,12 @@ export default function Profile({navigation}) {
         }
     
         )();
-    }, [])
+    }, [route])
 
     if(data.length > 0) {
         return (
             <ScrollView>
+            <Text>Welcome {user}</Text>
             {data.map((x)=> (
                 <View style={styles.habitContainer}>
                 <Pressable style={styles.habitButton}>

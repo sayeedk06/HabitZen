@@ -19,7 +19,8 @@ export default function Root({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
+  const [invalid, setInvalid] = useState(false);
+  //console.log(navigation)
   const validateForm = () => {
     let errors = {}
     if (!email) errors.email = "*Username is required";
@@ -45,11 +46,21 @@ export default function Root({ navigation }) {
 
                     }
                 )
-            }).then((response) => response.json()).then((responseData) => {
+            }).then((response) => {
+              if (response.ok) 
+                  return response.json()
+              
+                // throw new Error('Something went wrong')
+              }).then((responseData) => {
                 console.log(responseData);
                 console.log(responseData.token)
-                storeData(responseData.token);
-                navigation.navigate('Home')            
+
+                navigation.navigate("Home", {screen:'Profile', params: {text: 'Hello'}})
+
+            }).catch((err)=>{
+              console.log(err)
+              setInvalid(true)
+
             })
     }
   }
@@ -62,6 +73,7 @@ export default function Root({ navigation }) {
       <TextInput style={styles.textBox} placeholder='Password' onChangeText={setPassword} secureTextEntry/>
       {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
       <StatusBar style="auto" />
+      {invalid && <Text style={styles.errors}>Invalid username or password </Text>}
       <View style={styles.buttonContainer}>
         <Button name='Log in' validateForm={authorizeUser} navigation={navigation}/>
         <Button name='Register' navigation={navigation}/>
