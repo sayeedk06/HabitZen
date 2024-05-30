@@ -16,7 +16,7 @@ export default function App() {
       <NavigationContainer>
       <Stack.Navigator>
           <Stack.Screen name="Log in" component={Root} options={{headerShown: false}}/>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={Home} options={{gestureEnabled: false, headerLeft: () => <></>}}/>
           <Stack.Screen name="Create habit" component={CreateHabit} />
           <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>    

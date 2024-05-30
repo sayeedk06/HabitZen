@@ -54,8 +54,8 @@ export default function Root({ navigation }) {
               }).then((responseData) => {
                 console.log(responseData);
                 console.log(responseData.token)
-
-                navigation.navigate("Home", {screen:'Profile', params: {text: 'Hello'}})
+                storeData(responseData.token)
+                navigation.navigate("Home", {screen:'Profile', params: {text: email}})
 
             }).catch((err)=>{
               console.log(err)

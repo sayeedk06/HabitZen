@@ -3,7 +3,7 @@ import { Calendar } from 'react-native-calendars';
 import InputForm from '../components/InputForm';
 import { useState } from 'react';
 
-export default function CreateHabit({navigation}) {
+export default function CreateHabit({navigation, route}) {
     const [habit, setHabit] = useState("");
     const [desc, setDesc] = useState("");
     const [category, setCategory] = useState("");
@@ -13,6 +13,8 @@ export default function CreateHabit({navigation}) {
     const [startTerm, setStartTerm] = useState("");
     const [endTerm, setEndTerm] = useState("");
     const [errors, setErrors] = useState({});
+    const {userId} = route.params;
+    console.log("In create habit" + userId)
 
     const validateForm = () =>{
         let errors = {}
@@ -53,13 +55,14 @@ export default function CreateHabit({navigation}) {
                         period: period,
                         tags: tag,
                         startTerm: startTerm,
-                        endTerm: endTerm
+                        endTerm: endTerm,
+                        userId: userId
     
                     }
                 )
             }).then((response) => response.json()).then((responseData) => {
                 console.log(responseData);
-                navigation.navigate("Home", {screen: 'Profile', params: {text: 'refresh'}});
+                navigation.navigate("Home", {screen: 'Profile', params: {text: userId}});
             })
         }
         
@@ -67,7 +70,6 @@ export default function CreateHabit({navigation}) {
 
     return (
         <ScrollView style={styles.Container}>
-
             <InputForm name='Name' placeholder='Habit name' track={setHabit} />
             {errors.habit && <Text style={styles.errors}>{errors.habit}</Text>}
             <InputForm name='Description' placeholder='optional' track={setDesc} />
