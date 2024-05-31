@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 import { Pressable, Text } from "react-native";
-export default function FloatingButton({name, navigation, empty, userId}) {
+export default function FloatingButton({name, navigation, empty, userId, email}) {
     console.log("In float " + userId)
     return (
-        <Pressable style={[empty? styles.button: styles.buttonData]} onPress={()=> navigation.navigate('Create habit', {userId: userId})}>
+        <Pressable style={[empty? styles.button: styles.buttonData]} onPress={()=> navigation.navigate('Create habit', {userId: userId, email: email})}>
             <Text style={styles.buttonText}>{name}</Text>
         </Pressable>
     );

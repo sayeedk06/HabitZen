@@ -13,7 +13,7 @@ export default function CreateHabit({navigation, route}) {
     const [startTerm, setStartTerm] = useState("");
     const [endTerm, setEndTerm] = useState("");
     const [errors, setErrors] = useState({});
-    const {userId} = route.params;
+    const {userId, email} = route.params;
     console.log("In create habit" + userId)
 
     const validateForm = () =>{
@@ -62,7 +62,7 @@ export default function CreateHabit({navigation, route}) {
                 )
             }).then((response) => response.json()).then((responseData) => {
                 console.log(responseData);
-                navigation.navigate("Home", {screen: 'Profile', params: {text: userId}});
+                navigation.navigate("Home", {screen: 'Profile', params: {text: email}});
             })
         }
         

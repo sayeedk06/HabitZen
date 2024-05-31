@@ -18,69 +18,40 @@ const getToken = async () => {
     }
 };
 
-
-async function getData(userId) {
-    const token = await getToken();
-    const headers = { 'authorization': `Bearer ${token}` }
-    // console.log("hEEEE ",token)
-    const url = `http://172.20.10.2:8000/api/habits/${userId}`
-    const res = await fetch(url, { headers });
-    const data = await res.json();
-    // console.log(data)
-    return data
+const deleteItem = () => {
+    
 }
 
-async function getUser(email) {
-    console.log("Inside get user" + email)
-    const utoken = await getToken();
-    const headers = { 'authorization': `Bearer ${utoken}` }
-    const url = `http://172.20.10.2:8000/api/users/${email}`
-    const res = await fetch(url, {headers} );
-    const data = await res.json()
-    console.log(data[0].iduser)
-    return data
-}
 
 export default function Profile({ route, navigation }) {
 
     const [data, setData] = useState([]);
-    const [user, setUser] = useState([]);
-    const { text } = route.params
+    const [user, setUser] = useState({});
+    const { text } = route.params;
+
+    console.log("Email" + text)
 
     useEffect(() => {
-        (async () => {
-            
-            try{
-                const userData = await getUser(text);
-                setUser(userData)
-                
-            }catch(e) {
-                console.log(e)
-            }
-            
-            
-            try {
-                const data = await getData(text);
-                //console.log("DATA->"+data)
-                setData(data);
-            } catch (e) {
-                console.log("FETCH:" + e)
-            }
-
-        }
-
-        )();
+        const user = fetch(`http://172.20.10.2:8000/api/users/${text}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setUser(data[0])
+                        return fetch( `http://172.20.10.2:8000/api/habits/${data[0].iduser}`)
+                    .catch(err => console.error('Request failed', err))
+                    })
+        user.then(response => response.json())
+                    .then(data => setData(data))
     }, [route])
 
     if (data.length > 0) {
         return (
             <View>
                 <View style={styles.titleBox}>
-                <Text style={styles.title}>Welcome</Text>
-                {user.map((x)=> (
-                    <Text style={styles.username} >{x.name}</Text>
-                ) )}
-                
+                    <Text style={styles.title}>Welcome</Text>
+                    
+                    <Text style={styles.username} >{user.name}</Text>
+                    
+
                 </View>
 
                 <ScrollView>
@@ -88,19 +59,19 @@ export default function Profile({ route, navigation }) {
                     {data.map((x) => (
                         <View key={x.idhabits} style={styles.habitContainer}>
                             <Pressable style={styles.habitButton}>
-                                <Text  style={styles.habitText}>{x.name}</Text>
+                                <Text style={styles.habitText}>{x.name}</Text>
                             </Pressable>
-                            <Pressable style={styles.deleteButton}>
+                            <Pressable style={styles.deleteButton} onPress={deleteItem}>
                                 <Icon name="delete" size={30} color="#FFBB70" />
                             </Pressable>
                         </View>
                     ))}
 
                 </ScrollView>
-                {user.map((x)=> (
-                    <FloatingButton name='+' navigation={navigation} empty={false} userId={x.iduser}/>
-                ) )}
                 
+                <FloatingButton name='+' navigation={navigation} empty={false} userId={user.iduser} email={user.email} />
+                
+
             </View>
         )
     } else {
@@ -109,12 +80,21 @@ export default function Profile({ route, navigation }) {
             <View style={styles.container}>
                 <Text style={styles.homeText}>Welcome to HabitZen!!</Text>
                 
-                <Text style={styles.username} >{user[0].name}</Text>
-               
+                    
+                <Text style={styles.username} >{user.name}</Text>
+                   
+                
+
+
                 <Image style={styles.backgroundImage} source={require("../assets/background.png")} />
                 <Text style={styles.noitemText}>No habits added yet</Text>
                 <Text style={styles.noitemText}>Click + to add</Text>
-                <FloatingButton name='+' navigation={navigation} empty={true} userId={user[0].iduser}/>
+             
+                    
+                <FloatingButton name='+' navigation={navigation} empty={true} userId={user.iduser} email={user.email} />
+                  
+               
+
             </View>
         )
     }
@@ -139,7 +119,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#FFF',
         fontSize: 30
-        
+
     },
     username: {
         textAlign: 'center',
