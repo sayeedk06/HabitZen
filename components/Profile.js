@@ -18,8 +18,18 @@ const getToken = async () => {
     }
 };
 
-const deleteItem = () => {
-    
+const deleteItem = async (id) => {
+    console.log(id)
+    const item = fetch(`http://172.20.10.2:8000/api/habits/delete/${id}`,{
+        method: "DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+    })
+                .then(response=> response.json())
+                .then(data => console.log(data))
+                .catch(err => console.Console.log(err))
 }
 
 
@@ -61,8 +71,11 @@ export default function Profile({ route, navigation }) {
                             <Pressable style={styles.habitButton}>
                                 <Text style={styles.habitText}>{x.name}</Text>
                             </Pressable>
-                            <Pressable style={styles.deleteButton} onPress={deleteItem}>
+                            <Pressable style={styles.deleteButton} onPress={()=>deleteItem(x.idhabits)}>
                                 <Icon name="delete" size={30} color="#FFBB70" />
+                            </Pressable>
+                            <Pressable style={styles.deleteButton} onPress={()=> navigation.navigate('edit habit')}>
+                                <Icon name="edit" size={30} color="#FFBB70" />
                             </Pressable>
                         </View>
                     ))}

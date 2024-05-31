@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Root from './pages/Root'
 import Home from './pages/Home'
 import CreateHabit from './pages/CreateHabit';
-import { useState } from 'react';
 import Register from './pages/Register';
+import EditHabit from './pages/EditHabit';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +19,7 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} options={{gestureEnabled: false, headerLeft: () => <></>}}/>
           <Stack.Screen name="Create habit" component={CreateHabit} />
           <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="edit habit" component={EditHabit} />
         </Stack.Navigator>    
       </NavigationContainer>
     );
