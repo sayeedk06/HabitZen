@@ -74,7 +74,7 @@ export default function Profile({ route, navigation }) {
                             <Pressable style={styles.deleteButton} onPress={()=>deleteItem(x.idhabits)}>
                                 <Icon name="delete" size={30} color="#FFBB70" />
                             </Pressable>
-                            <Pressable style={styles.deleteButton} onPress={()=> navigation.navigate('edit habit')}>
+                            <Pressable style={styles.deleteButton} onPress={()=> navigation.navigate('edit habit',{habitid: x.idhabits, text: user.email})}>
                                 <Icon name="edit" size={30} color="#FFBB70" />
                             </Pressable>
                         </View>

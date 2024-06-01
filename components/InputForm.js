@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
 
-export default function InputForm({name, placeholder, track}) {
+export default function InputForm({name, placeholder, track, value}) {
     return (
         <View style={styles.inputGroup}>
             <Text>{name}</Text>
-            <TextInput style={styles.input} autoCorrect={true} placeholder={placeholder} onChangeText={track}/>
+            <TextInput style={styles.input} autoCorrect={true} placeholder={placeholder} value={value} onChangeText={track}/>
         </View>
     )
 }
