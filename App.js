@@ -1,5 +1,5 @@
 
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Root from './pages/Root'
@@ -7,23 +7,25 @@ import Home from './pages/Home'
 import CreateHabit from './pages/CreateHabit';
 import Register from './pages/Register';
 import EditHabit from './pages/EditHabit';
-
+import { ThemeProvider } from "./context/theme";
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
-    return (
-      <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen name="Log in" component={Root} options={{headerShown: false}}/>
-          <Stack.Screen name="Home" component={Home} options={{gestureEnabled: false, headerLeft: () => <></>}}/>
+  return (
+    <NavigationContainer>
+      <ThemeProvider>
+        <Stack.Navigator>
+          <Stack.Screen name="Log in" component={Root} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false, headerLeft: () => <></> }} />
           <Stack.Screen name="Create habit" component={CreateHabit} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="edit habit" component={EditHabit} />
-        </Stack.Navigator>    
-      </NavigationContainer>
-    );
-  
+        </Stack.Navigator>
+      </ThemeProvider>
+    </NavigationContainer>
+  );
+
 }
 
 const styles = StyleSheet.create({
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 5,
     borderWidth: 1
-    
+
   },
   button: {
     backgroundColor: '#FC4100',
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 10,
 
-    
+
   },
   buttonText: {
     fontSize: 16,

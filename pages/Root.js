@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import Button from '../components/Button'
+import { GlobalLayout } from "../components/Layout";
 import { StyleSheet, View, Image, TextInput, KeyboardAvoidingView, Text } from 'react-native';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -66,13 +67,13 @@ export default function Root({ navigation }) {
   }
 
   return (
+    <GlobalLayout>
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <Image style={styles.logo} source={require('../assets/icon.png')} />
       <TextInput style={styles.textBox} placeholder='Username/Email' onChangeText={setEmail}/>
       {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
       <TextInput style={styles.textBox} placeholder='Password' onChangeText={setPassword} secureTextEntry/>
       {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
-      <StatusBar style="auto" />
       {invalid && <Text style={styles.errors}>Invalid username or password </Text>}
       <View style={styles.buttonContainer}>
         <Button name='Log in' validateForm={authorizeUser} navigation={navigation}/>
@@ -80,6 +81,7 @@ export default function Root({ navigation }) {
       </View>
 
     </KeyboardAvoidingView>
+    </GlobalLayout>
   );
 }
 

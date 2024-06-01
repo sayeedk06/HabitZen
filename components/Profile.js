@@ -3,7 +3,8 @@ import FloatingButton from './floatingButton';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { StyleSheet, View, Image, Text, Pressable, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { GlobalStyles } from "../styles/global"
+import { GlobalLayout } from "../components/Layout";
 const getToken = async () => {
     try {
         const value = await AsyncStorage.getItem('ACCESS_TOKEN');
@@ -38,8 +39,9 @@ export default function Profile({ route, navigation }) {
     const [data, setData] = useState([]);
     const [user, setUser] = useState({});
     const { text } = route.params;
+    const globalStyles = GlobalStyles();
 
-    console.log("Email" + text)
+    // console.log("Email" + globalStyles.text)
 
     useEffect(() => {
         const user = fetch(`http://172.20.10.2:8000/api/users/${text}`)
@@ -55,11 +57,11 @@ export default function Profile({ route, navigation }) {
 
     if (data.length > 0) {
         return (
-            <View>
+            <GlobalLayout>
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>Welcome</Text>
                     
-                    <Text style={styles.username} >{user.name}</Text>
+                    <Text style={globalStyles.text} >{user.name}</Text>
                     
 
                 </View>
@@ -68,15 +70,23 @@ export default function Profile({ route, navigation }) {
 
                     {data.map((x) => (
                         <View key={x.idhabits} style={styles.habitContainer}>
+                            <View style={styles.habitDetail}>
                             <Pressable style={styles.habitButton}>
-                                <Text style={styles.habitText}>{x.name}</Text>
+                                <Text>{x.name}</Text>
                             </Pressable>
-                            <Pressable style={styles.deleteButton} onPress={()=>deleteItem(x.idhabits)}>
+                            <Text>Goal: {x.goals} times per {x.period}</Text>
+                            <Text>Habit Period: {x.startTerm.split('T')[0]} - {x.endTerm.split('T')[0]}</Text>
+                            <Text>Habit Challenge due in </Text>
+                            </View>
+                            <View>
+                            <Pressable style={styles.deleteButton} onPress  ={()=>deleteItem(x.idhabits)}>
                                 <Icon name="delete" size={30} color="#FFBB70" />
                             </Pressable>
                             <Pressable style={styles.deleteButton} onPress={()=> navigation.navigate('edit habit',{habitid: x.idhabits, text: user.email})}>
                                 <Icon name="edit" size={30} color="#FFBB70" />
                             </Pressable>
+                            </View>
+                            
                         </View>
                     ))}
 
@@ -85,16 +95,16 @@ export default function Profile({ route, navigation }) {
                 <FloatingButton name='+' navigation={navigation} empty={false} userId={user.iduser} email={user.email} />
                 
 
-            </View>
+            </GlobalLayout>
         )
     } else {
         return (
 
-            <View style={styles.container}>
-                <Text style={styles.homeText}>Welcome to HabitZen!!</Text>
+            <View style={[styles.container, globalStyles.container]}>
+                <Text style={[styles.homeText, globalStyles.homeText]}>Welcome to HabitZen!!</Text>
                 
                     
-                <Text style={styles.username} >{user.name}</Text>
+                <Text style={globalStyles.text} >{user.name}</Text>
                    
                 
 
@@ -141,11 +151,10 @@ const styles = StyleSheet.create({
     },
     habitText: {
         color: "#FFFBDA",
-        fontSize: 20,
+        fontSize: 25,
     },
     habitButton: {
         backgroundColor: "#ED9455",
-        padding: 10,
         width: 210,
         margin: 5,
     },
@@ -174,6 +183,9 @@ const styles = StyleSheet.create({
 
         elevation: 4,
 
+    },
+    habitDetail: {
+        padding: 20
     },
     homeText: {
         fontSize: 30,

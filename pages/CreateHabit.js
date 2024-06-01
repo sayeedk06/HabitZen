@@ -2,8 +2,10 @@ import { StyleSheet, View, TextInput, Text, ScrollView, Pressable, TouchableOpac
 import { Calendar } from 'react-native-calendars';
 import InputForm from '../components/InputForm';
 import { useState } from 'react';
+import { GlobalStyles } from '../styles/global';
 
 export default function CreateHabit({navigation, route}) {
+    const globalStyles = GlobalStyles()
     const [habit, setHabit] = useState("");
     const [desc, setDesc] = useState("");
     const [category, setCategory] = useState("");
@@ -36,6 +38,7 @@ export default function CreateHabit({navigation, route}) {
 
 
     const createHabit = async() => {
+        
 
         if (validateForm()) {
             const url = "http://172.20.10.2:8000/api/habits"
@@ -69,7 +72,7 @@ export default function CreateHabit({navigation, route}) {
     }
 
     return (
-        <ScrollView style={styles.Container}>
+        <ScrollView style={[styles.Container, globalStyles.container]}>
             <InputForm name='Name' placeholder='Habit name' track={setHabit} />
             {errors.habit && <Text style={styles.errors}>{errors.habit}</Text>}
             <InputForm name='Description' placeholder='optional' track={setDesc} />
@@ -77,18 +80,18 @@ export default function CreateHabit({navigation, route}) {
             <InputForm name='Category' placeholder='required' track={setCategory} />
             {errors.category && <Text style={styles.errors}>{errors.category}</Text>}
             <View style={styles.inputGroup}>
-                <Text>Goals/Period: {period}</Text>
+                <Text style={globalStyles.text}>Goals/Period: {period}</Text>
                 <View style={styles.horizontalContainer}>
                     <TextInput style={styles.inputGoal} keyboardType="numeric" onChangeText={setGoals} />
                     <Text style={styles.centerText}>/</Text>
                     <Pressable onPress={() => setPeriod("day")}>
-                        <Text style={styles.centerText}>Day</Text>
+                        <Text style={[styles.centerText, globalStyles.text]}>Day</Text>
                     </Pressable>
                     <Pressable onPress={() => setPeriod("Week")}>
-                        <Text style={styles.centerText}>Week</Text>
+                        <Text style={[styles.centerText, globalStyles.text]}>Week</Text>
                     </Pressable>
                     <Pressable onPress={() => setPeriod("Month")}>
-                        <Text style={styles.centerText}>Month</Text>
+                        <Text style={[styles.centerText, globalStyles.text]}>Month</Text>
                     </Pressable>
 
                 </View>
@@ -102,14 +105,14 @@ export default function CreateHabit({navigation, route}) {
                 <Text style={styles.text}>Start Term: {startTerm}</Text>
                 {errors.startTerm && <Text style={styles.errors}>{errors.startTerm}</Text>}
                 
-                <Calendar showWeekNumbers={true} onDayPress={day => {
+                <Calendar style={globalStyles.container} showWeekNumbers={true} onDayPress={day => {
                     console.log('selected day', day);
                     setStartTerm(day.dateString);
                 }} />
                 <Text style={styles.text}>End Term: {endTerm}</Text>
                 {errors.endTerm && <Text style={styles.errors}>{errors.endTerm}</Text>}
                 {errors.invalidTerm && <Text style={styles.errors}>{errors.invalidTerm}</Text>}
-                <Calendar showWeekNumbers={true} onDayPress={day => {
+                <Calendar style={globalStyles.container} showWeekNumbers={true} onDayPress={day => {
                     console.log('selected day', day);
                     setEndTerm(day.dateString);
                 }} />
@@ -129,7 +132,6 @@ export default function CreateHabit({navigation, route}) {
 const styles = StyleSheet.create({
     Container: {
         flex: 1,
-        backgroundColor: '#F9F7F7'
     },
     horizontalContainer: {
         flexDirection: 'row',

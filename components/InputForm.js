@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-
+import { GlobalStyles } from "../styles/global";
 
 export default function InputForm({name, placeholder, track, value}) {
+    const globalStyles= GlobalStyles()
     return (
         <View style={styles.inputGroup}>
-            <Text>{name}</Text>
+            <Text style={globalStyles.text}>{name}</Text>
             <TextInput style={styles.input} autoCorrect={true} placeholder={placeholder} value={value} onChangeText={track}/>
         </View>
     )
