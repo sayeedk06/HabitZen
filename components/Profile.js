@@ -53,7 +53,7 @@ export default function Profile({ route, navigation }) {
                     })
         user.then(response => response.json())
                     .then(data => setData(data))
-    }, [route])
+    }, [route,data])
 
     if (data.length > 0) {
         return (
@@ -61,7 +61,7 @@ export default function Profile({ route, navigation }) {
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>Welcome</Text>
                     
-                    <Text style={globalStyles.text} >{user.name}</Text>
+                    <Text style={[styles.username,globalStyles.title]} >{user.name}</Text>
                     
 
                 </View>
@@ -72,11 +72,11 @@ export default function Profile({ route, navigation }) {
                         <View key={x.idhabits} style={styles.habitContainer}>
                             <View style={styles.habitDetail}>
                             <Pressable style={styles.habitButton}>
-                                <Text>{x.name}</Text>
+                                <Text style={styles.habitTitle}>{x.name}</Text>
                             </Pressable>
-                            <Text>Goal: {x.goals} times per {x.period}</Text>
-                            <Text>Habit Period: {x.startTerm.split('T')[0]} - {x.endTerm.split('T')[0]}</Text>
-                            <Text>Habit Challenge due in </Text>
+                            <Text style={globalStyles.title}>Goal: {x.goals} times per {x.period}</Text>
+                            <Text style={globalStyles.title}>Habit Period: {x.startTerm.split('T')[0]} - {x.endTerm.split('T')[0]}</Text>
+                            <Text style={globalStyles.title}>Habit Challenge due in </Text>
                             </View>
                             <View>
                             <Pressable style={styles.deleteButton} onPress  ={()=>deleteItem(x.idhabits)}>
@@ -94,7 +94,6 @@ export default function Profile({ route, navigation }) {
                 
                 <FloatingButton name='+' navigation={navigation} empty={false} userId={user.iduser} email={user.email} />
                 
-
             </GlobalLayout>
         )
     } else {
@@ -144,6 +143,11 @@ const styles = StyleSheet.create({
         fontSize: 30
 
     },
+    habitTitle: {
+        color: '#FFF',
+        fontSize: 30
+
+    },
     username: {
         textAlign: 'center',
         marginTop: 10,
@@ -154,8 +158,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     habitButton: {
+        
         backgroundColor: "#ED9455",
-        width: 210,
         margin: 5,
     },
     deleteButton: {

@@ -15,6 +15,9 @@ export function GlobalStyles() {
         homeText: {
             color: isDark ? '#fff' : '#ED9455',
         },
+        title: {
+            color: isDark? '#fff': '#443C68'
+        }
 
 
     });
