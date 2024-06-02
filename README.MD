@@ -30,3 +30,6 @@ The purpose of the applization is to track your habits that you want to achieve 
 - styles
 
 **Architecture**
+
+Top level overview of the HabitZen app
+![system Architecture](docs/Database.jpg)
