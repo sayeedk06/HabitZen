@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import licenses from '../licenses.json'
 import { GlobalStyles } from "../styles/global"
-
+import packages from '../package.json'
 const license_name = [];
 for (var k in licenses){
     if (licenses.hasOwnProperty(k)){
@@ -34,14 +34,14 @@ export default function About() {
             Create your own list of habits to track. Whether it's daily exercise, reading, or meditation, our app lets you tailor your habits to your lifestyle.
             </Text>
             <Text style={[styles.header, globalStyles.text]}>
-                Streaks and Progress:
+                Streaks and Progress(Feature coming soon):
             </Text>
             <Text style={globalStyles.text}>
                 Monitor your progress with streaks. 
                 The longer you maintain a habit, the more rewarding it becomes. Celebrate your achievements and stay motivated!
             </Text>
             <Text style={[styles.header,globalStyles.text]}>
-                Reminders and Notifications: 
+                Reminders and Notifications(Feature coming soon): 
             </Text>
             <Text style={globalStyles.text}>
                 Set reminders for your habits. Our app will send you gentle nudges to keep you accountable throughout the day.
@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     title: {
-        fontSize: 30
+        padding: 3,
+        fontWeight: 'bold'
     },
     header: {
         fontWeight: 'bold'

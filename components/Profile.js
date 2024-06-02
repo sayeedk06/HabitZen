@@ -95,9 +95,9 @@ export default function Profile({ route, navigation }) {
                                 </View>
 
                             </View>
-                            <TouchableOpacity style={styles.detailButton} onPress={() => detailData(x.idhabits)}>
+                            {/* <TouchableOpacity style={styles.detailButton} onPress={() => detailData(x.idhabits)}>
                                 <Text style={globalStyles.title}>Detail</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     ))}
 

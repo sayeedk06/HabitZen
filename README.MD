@@ -10,6 +10,7 @@ The purpose of the applization is to track your habits that you want to achieve 
 - react-native-calender
 - react-native-safe-area-context
 - react-native-async-storage/async-storage
+- knexjs
 - react-native-vector-icons
 - npm-license-crawler
 
@@ -33,3 +34,9 @@ The purpose of the applization is to track your habits that you want to achieve 
 
 Top level overview of the HabitZen app
 ![system Architecture](docs/Database.jpg)
+
+### Running the test app in Expo
+
+>npm start
+
+Then scan the qr code using phone. Need to download expo app for phone to work
